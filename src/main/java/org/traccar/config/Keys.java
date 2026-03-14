@@ -570,7 +570,27 @@ public final class Keys {
     public static final ConfigKey<Boolean> DATABASE_SAVE_EMPTY = new BooleanConfigKey(
             "database.saveEmpty",
             List.of(KeyType.CONFIG));
+    /**
+     * Enable or disable saving positions to database storage. When disabled, positions are only forwarded.
+     */
+    public static final ConfigKey<Boolean> DATABASE_SAVE_POSITIONS = new BooleanConfigKey(
+            "database.savePositions",
+            List.of(KeyType.CONFIG),
+            true);
 
+    /**
+     * Enable Redis connection management for device status tracking.
+     */
+    public static final ConfigKey<Boolean> REDIS_ENABLE = new BooleanConfigKey(
+            "redis.enable",
+            List.of(KeyType.CONFIG));
+
+    /**
+     * Redis connection URL. Example: redis://localhost:6379/0
+     */
+    public static final ConfigKey<String> REDIS_URL = new StringConfigKey(
+            "redis.url",
+            List.of(KeyType.CONFIG));
     /**
      * Device limit for self registered users. Default value is -1, which indicates no limit.
      */

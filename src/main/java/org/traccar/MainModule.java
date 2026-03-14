@@ -78,6 +78,7 @@ import org.traccar.geolocation.OpenCellIdGeolocationProvider;
 import org.traccar.geolocation.UniversalGeolocationProvider;
 import org.traccar.geolocation.UnwiredGeolocationProvider;
 import org.traccar.handler.CopyAttributesHandler;
+import org.traccar.handler.DeviceConnectionHandler;
 import org.traccar.handler.FilterHandler;
 import org.traccar.handler.GeocoderHandler;
 import org.traccar.handler.GeolocationHandler;
@@ -89,6 +90,7 @@ import org.traccar.mail.LogMailManager;
 import org.traccar.mail.MailManager;
 import org.traccar.mail.SmtpMailManager;
 import org.traccar.session.cache.CacheManager;
+import org.traccar.redis.RedisConnectionManager;
 import org.traccar.sms.HttpSmsClient;
 import org.traccar.sms.SmsManager;
 import org.traccar.sms.SnsSmsClient;
@@ -386,4 +388,16 @@ public class MainModule extends AbstractModule {
         return velocityEngine;
     }
 
+    @Singleton
+    @Provides
+    public static RedisConnectionManager provideRedisConnectionManager(Config config) {
+        return new RedisConnectionManager(config);
+    }
+
+    @Singleton
+    @Provides
+    public static DeviceConnectionHandler provideDeviceConnectionHandler(
+            Config config, RedisConnectionManager redisConnectionManager, CacheManager cacheManager) {
+        return new DeviceConnectionHandler(config, redisConnectionManager, cacheManager);
+    }
 }
