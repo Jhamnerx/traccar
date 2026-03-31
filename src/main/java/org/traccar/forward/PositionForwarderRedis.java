@@ -17,8 +17,6 @@ package org.traccar.forward;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.traccar.config.Config;
 import org.traccar.config.Keys;
 import redis.clients.jedis.Jedis;
@@ -33,7 +31,7 @@ public class PositionForwarderRedis implements PositionForwarder {
     private final ObjectMapper objectMapper;
 
     public PositionForwarderRedis(Config config, ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+        this.objectMapper = objectMapper.copy().enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         this.url = config.getString(Keys.FORWARD_URL);
     }
 
@@ -48,6 +46,7 @@ public class PositionForwarderRedis implements PositionForwarder {
 
         try {
             String key = "positions." + positionData.getDevice().getUniqueId();
+            positionData.getPosition().setUniqueId(positionData.getDevice().getUniqueId());
             String value = objectMapper.writeValueAsString(positionData.getPosition());
             try (Jedis jedis = new Jedis(url)) {
                 jedis.lpush(key, value);
