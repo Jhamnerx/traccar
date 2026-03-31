@@ -206,6 +206,37 @@ public final class Keys {
             List.of(KeyType.CONFIG));
 
     /**
+     * Speed units for the protocol. Possible values: knots (default), kmh, mps, mph.
+     */
+    public static final ConfigSuffix<String> PROTOCOL_SPEED = new StringConfigSuffix(
+            ".speed",
+            List.of(KeyType.CONFIG));
+
+    /**
+     * Custom format string 0 for GlobalSat protocol.
+     */
+    public static final ConfigSuffix<String> PROTOCOL_FORMAT_0 = new StringConfigSuffix(
+            ".format0",
+            List.of(KeyType.CONFIG),
+            "TSPRXAB27GHKLMnaicz*U!");
+
+    /**
+     * Custom format string 1 for GlobalSat protocol.
+     */
+    public static final ConfigSuffix<String> PROTOCOL_FORMAT_1 = new StringConfigSuffix(
+            ".format1",
+            List.of(KeyType.CONFIG),
+            "SARY*U!");
+
+    /**
+     * Custom report columns for Genx protocol.
+     */
+    public static final ConfigSuffix<String> PROTOCOL_REPORT_COLUMNS = new StringConfigSuffix(
+            ".reportColumns",
+            List.of(KeyType.CONFIG),
+            "1,2,3,4");
+
+    /**
      * Protocol type for Suntech.
      */
     public static final ConfigKey<Integer> PROTOCOL_TYPE = new IntegerConfigKey(
@@ -1319,6 +1350,13 @@ public final class Keys {
      */
     public static final ConfigKey<Boolean> NOTIFICATOR_TELEGRAM_SEND_LOCATION = new BooleanConfigKey(
             "notificator.telegram.sendLocation",
+            List.of(KeyType.CONFIG));
+
+    /**
+     * Telegram notification proxy URL.
+     */
+    public static final ConfigKey<String> NOTIFICATOR_TELEGRAM_PROXY_URL = new StringConfigKey(
+            "notificator.telegram.proxy.url",
             List.of(KeyType.CONFIG));
 
     /**
