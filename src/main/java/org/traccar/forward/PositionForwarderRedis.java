@@ -17,14 +17,13 @@ package org.traccar.forward;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.traccar.config.Config;
 import org.traccar.config.Keys;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisException;
 
 public class PositionForwarderRedis implements PositionForwarder {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PositionForwarderRedis.class);
 
     private final String url;
 
@@ -39,7 +38,6 @@ public class PositionForwarderRedis implements PositionForwarder {
     public void forward(PositionData positionData, ResultHandler resultHandler) {
 
         if (positionData.getDevice() == null) {
-            LOGGER.warn("Position forwarding skipped: device not found in cache");
             resultHandler.onResult(false, new IllegalStateException("Device is null"));
             return;
         }
@@ -55,7 +53,6 @@ public class PositionForwarderRedis implements PositionForwarder {
         } catch (JsonProcessingException e) {
             resultHandler.onResult(false, e);
         } catch (JedisException e) {
-            LOGGER.warn("Failed to forward position to Redis", e);
             resultHandler.onResult(false, e);
         }
     }
